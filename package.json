@@ -1,0 +1,21 @@
+{
+  "name": "language-perspectives-arc",
+  "version": "0.0.0",
+  "description": "Perspectives Arc language",
+  "keywords": [
+    "language",
+    "grammar"
+  ],
+  "repository": "https://github.com/atom/language-perspectives-arc",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.9.0",
+    "season": "~2.0.0"
+  },
+  "scripts": {
+    "build": "coffee src/perspectives-arc.coffee"
+  }
+}

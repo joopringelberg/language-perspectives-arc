@@ -1,0 +1,400 @@
+'fileTypes': [
+  'arc'
+]
+'name': 'Perspectives Arc'
+'scopeName': 'source.perspectives-arc'
+'macros':
+  'CapitalizedString': '[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*'
+  'UncapitalizedString': '[\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*'
+  'LowerCaseString': '[\\p{Ll}_][\\p{Ll}_\\p{Lt}\\p{Nd}\']*'
+  'Prefix': '[\\p{Ll}_][\\p{Ll}_\\p{Lt}\\p{Nd}\']*\\:'
+  'maybeBirdTrack': '^'
+  'character': '(?:[ -\\[\\]-~]|(\\\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\"\'\\&]))|(\\\\o[0-7]+)|(\\\\x[0-9A-Fa-f]+)|(\\^[A-Z@\\[\\]\\\\\\^_]))'
+  'ranges': '(?:String|Boolean|Number|Date)'
+'patterns': [
+  {
+    'name': 'meta.entity.textdeclaration.perspectives-arc'
+    'begin': '^(Tekstnaam)\\s+'
+    'end': '$'
+    'beginCaptures':
+      '1':
+        'name': 'keyword.other.perspectives-arc'
+    'patterns': [
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#characters'
+      }
+    ]
+  }
+  {
+    'name': 'keyword.control.perspectives-arc'
+    'match': 'als|met properties'
+  }
+  {
+    'name': 'support.other.perspectives-arc'
+    'match': 'import'
+  }
+  {
+    'name': 'section.perspectives-arc'
+    'match': '(Partijen|Zaken|Activiteiten|Toestanden|Acties|Rollen|Properties|Acties|Views|intern|extern)'
+    'captures':
+      '1':
+        'name': 'keyword.other.perspectives-arc'
+  }
+  {
+    'name': 'meta.entity.contexdeclaration.perspectives-arc'
+    'begin': '(?=.*heeft)'
+    'end': '$'
+    'patterns': [
+      {
+        'include': '#context'
+      }
+      {
+        'name': 'support.other.perspectives-arc'
+        'match': 'heeft'
+      }
+    ]
+  }
+  {
+    'name': 'meta.entity.roldeclaration.perspectives-arc'
+    'begin': '^\\s*(?=.*gevuld door)'
+    'end': '\\n{1,1}?'
+    'patterns': [
+      {
+        'name': 'support.other.perspectives-arc'
+        'match': 'gevuld door|heeft'
+      }
+      {
+        'include': '#verplicht'
+      }
+      {
+        'include': '#functioneel'
+      }
+      {
+        'include': '#rol'
+      }
+      {
+        'include': '#context'
+      }
+      {
+        'include': '#comments'
+      }
+    ]
+  }
+  {
+    'name': 'meta.entity.propertydeclaration.perspectives-arc'
+    'begin': '^\\s*(?=.*(?:String|Boolean|Number|Date))'
+    'end': '\\n{1,1}?'
+    'patterns': [
+      {
+        'include': '#verplicht'
+      }
+      {
+        'include': '#functioneel'
+      }
+      {
+        'include': '#range'
+      }
+      {
+        'include': '#property'
+      }
+      {
+        'include': '#context'
+      }
+      {
+        'include': '#comments'
+      }
+    ]
+  }
+  {
+    'name': 'meta.entity.import.perspectives-arc'
+    'begin': '^\\s*(import)'
+    'end': '\\n{1,1}?'
+    'beginCaptures':
+      '1':
+        'name': 'support.other.perspectives-arc'
+    'patterns': [
+      {
+        'include': '#domein_name'
+      }
+      {
+        'name': 'support.other.alias.perspectives-arc'
+        'match': '(als)\\s*([\\p{Ll}_][\\p{Ll}_\\p{Lt}\\p{Nd}\']*\\:)'
+        'captures':
+          '1':
+            'name': 'support.other.perspectives-arc'
+          '2':
+            'name': 'entity.name.tag.prefix.perspectives-arc'
+      }
+    ]
+  }
+  {
+    'include': '#comments'
+  }
+  {
+    'name': 'string.quoted.double.perspectives-arc'
+    'begin': '"'
+    'end': '"'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.perspectives-arc'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.end.perspectives-arc'
+    'patterns': [
+      {
+        'include': '#characters'
+      }
+      {
+        'begin': '\\\\\\s'
+        'end': '\\\\'
+        'beginCaptures':
+          '0':
+            'name': 'markup.other.escape.newline.begin.perspectives-arc'
+        'endCaptures':
+          '0':
+            'name': 'markup.other.escape.newline.end.perspectives-arc'
+        'patterns': [
+          {
+            'match': '\\S+'
+            'name': 'invalid.illegal.character-not-allowed-here.perspectives-arc'
+          }
+        ]
+      }
+    ]
+  }
+]
+'repository':
+  'range':
+    'patterns': [
+      {
+        'name': 'constant.language.propertytypes.perspectives-arc'
+        'match': '(?:String|Boolean|Number|Date)'
+      }
+    ]
+  'verplicht':
+    'patterns': [
+      {
+        'name': 'storage.modifier.verplicht.perspectives-arc'
+        'match': 'Verplicht|Niet\\s*Verplicht'
+      }
+    ]
+  'functioneel':
+    'patterns': [
+      {
+        'name': 'storage.modifier.functioneel.perspectives-arc'
+        'match': 'Functioneel|Niet\\s*Functioneel'
+      }
+    ]
+  'context':
+    'patterns': [
+      {
+        'include': '#localcontextName'
+      }
+      {
+        'include': '#qualifiedContextName'
+      }
+      {
+        'include': '#prefixedContextName'
+      }
+    ]
+  'localcontextName':
+    'patterns': [
+      {
+        'name': 'localcontextName.perspectives-arc'
+        'match': '(\\$)([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)'
+        'captures':
+          '1':
+            'name': 'entity.name.tag.separator.perspectives-arc'
+          '2':
+            'name': 'entity.name.type.localcontextname.perspectives-arc'
+      }
+    ]
+  'domein_name':
+    'patterns': [
+      {
+        'name': 'domein_name.perspectives-arc'
+        'match': '(model\\:)([\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)'
+        'captures':
+          '1':
+            'name': 'entity.name.tag.model.perspectives-arc'
+          '2':
+            'name': 'entity.name.type.localcontextname.perspectives-arc'
+      }
+    ]
+  'qualifiedContextName':
+    'patterns': [
+      {
+        'include': '#domein_name'
+      }
+      {
+        'include': '#localcontextName'
+      }
+    ]
+  'prefixedContextName':
+    'patterns': [
+      {
+        'name': 'entity.name.tag.prefix.perspectives-arc'
+        'match': '[\\p{Ll}_][\\p{Ll}_\\p{Lt}\\p{Nd}\']*\\:'
+      }
+      {
+        'name': 'entity.name.type.localcontextname.perspectives-arc'
+        'match': '[\\p{Lu}\\p{Lt}][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*'
+      }
+      {
+        'include': '#localcontextName'
+      }
+    ]
+  'rol':
+    'patterns': [
+      {
+        'include': '#localrolname'
+      }
+      {
+        'include': '#qualifiedContextName'
+      }
+      {
+        'include': '#prefixedContextName'
+      }
+    ]
+  'property':
+    'patterns': [
+      {
+        'include': '#rolsegment'
+      }
+      {
+        'include': '#localpropertyname'
+      }
+      {
+        'include': '#qualifiedContextName'
+      }
+      {
+        'include': '#prefixedContextName'
+      }
+    ]
+  'localrolname':
+    'patterns': [
+      {
+        'match': '(\\$)([\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)\\b'
+        'captures':
+          '1':
+            'name': 'entity.name.tag.separator.perspectives-arc'
+          '2':
+            'name': 'entity.other.tag.localrolname.perspectives-arc'
+      }
+    ]
+  'rolsegment':
+    'patterns': [
+      {
+        'match': '(\\$)([\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)(?=\\$)'
+        'captures':
+          '1':
+            'name': 'entity.name.tag.separator.perspectives-arc'
+          '2':
+            'name': 'entity.other.tag.rolsegment.perspectives-arc'
+      }
+    ]
+  'localpropertyname':
+    'patterns': [
+      {
+        'match': '(\\$)([\\p{Ll}_][\\p{Ll}_\\p{Lu}\\p{Lt}\\p{Nd}\']*)(?!\\$)'
+        'captures':
+          '1':
+            'name': 'entity.name.tag.separator.perspectives-arc'
+          '2':
+            'name': 'entity.other.attribute-name.localpropertyname.perspectives-arc'
+      }
+    ]
+  'comments':
+    'patterns': [
+      {
+        'begin': '(^[ \\t]+)?(?=--+\\s+\\|)'
+        'end': '(?!\\G)'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.whitespace.comment.leading.perspectives-arc'
+        'patterns': [
+          {
+            'name': 'comment.line.double-dash.documentation.perspectives-arc'
+            'begin': '(--+)\\s+(\\|)'
+            'end': '\\n'
+            'beginCaptures':
+              '1':
+                'name': 'punctuation.definition.comment.perspectives-arc'
+              '2':
+                'name': 'punctuation.definition.comment.documentation.perspectives-arc'
+          }
+        ]
+      }
+      {
+        'begin': '(^[ \\t]+)?(?=--+)'
+        'end': '(?!\\G)'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.whitespace.comment.leading.perspectives-arc'
+        'patterns': [
+          {
+            'name': 'comment.line.double-dash.perspectives-arc'
+            'begin': '--'
+            'end': '\\n'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.comment.perspectives-arc'
+          }
+        ]
+      }
+      {
+        'include': '#block_comment'
+      }
+    ]
+  'block_comment':
+    'patterns': [
+      {
+        'name': 'comment.block.documentation.perspectives-arc'
+        'begin': '\\{-\\s*\\|'
+        'end': '-\\}'
+        'applyEndPatternLast': 1
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.documentation.perspectives-arc'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.documentation.perspectives-arc'
+        'patterns': [
+          {
+            'include': '#block_comment'
+          }
+        ]
+      }
+      {
+        'name': 'comment.block.perspectives-arc'
+        'begin': '\\{-'
+        'end': '-\\}'
+        'applyEndPatternLast': 1
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.perspectives-arc'
+        'patterns': [
+          {
+            'include': '#block_comment'
+          }
+        ]
+      }
+    ]
+  'characters':
+    'patterns': [
+      {
+        'match': '(?:[ -\\[\\]-~]|(\\\\(?:NUL|SOH|STX|ETX|EOT|ENQ|ACK|BEL|BS|HT|LF|VT|FF|CR|SO|SI|DLE|DC1|DC2|DC3|DC4|NAK|SYN|ETB|CAN|EM|SUB|ESC|FS|GS|RS|US|SP|DEL|[abfnrtv\\\\\\"\'\\&]))|(\\\\o[0-7]+)|(\\\\x[0-9A-Fa-f]+)|(\\^[A-Z@\\[\\]\\\\\\^_]))'
+        'captures':
+          '1':
+            'name': 'constant.character.escape.perspectives-arc'
+          '2':
+            'name': 'constant.character.escape.octal.perspectives-arc'
+          '3':
+            'name': 'constant.character.escape.hexadecimal.perspectives-arc'
+          '4':
+            'name': 'constant.character.escape.control.perspectives-arc'
+      }
+    ]
