@@ -1,5 +1,6 @@
-# Run this file to regenerate the grammars/purescript.cson file, as follows:
+# Run this file to regenerate the grammars/perspectives-arc.cson file, as follows:
 # $ ./node_modules/.bin/coffee src/perspectives-arc.coffee
+# Refresh with ctrl-alt-cmd-l
 
 makeGrammar = require './syntax-tools'
 
@@ -27,10 +28,6 @@ arcGrammar =
   scopeName: 'source.perspectives-arc'
 
   macros:
-    CapitalizedString: /[\p{Lu}\p{Lt}][\p{Ll}_\p{Lu}\p{Lt}\p{Nd}']*/
-    UncapitalizedString: /[\p{Ll}_][\p{Ll}_\p{Lu}\p{Lt}\p{Nd}']*/
-    LowerCaseString: /[\p{Ll}_][\p{Ll}_\p{Lt}\p{Nd}']*/
-    Prefix: /{LowerCaseString}\:/
     maybeBirdTrack: /^/
     character: ///
       (?:
@@ -44,196 +41,33 @@ arcGrammar =
       )
       ///
     ranges: /(?:String|Boolean|Number|Date)/
+    keywordlimit: /[\:|\s]/
 
   patterns: [
-      name: 'meta.entity.textdeclaration'
-      begin: /^(Tekstnaam)\s+/
-      end: /$/
-      beginCaptures:
-        1: name: 'keyword.other'
-      patterns: [
-          include: '#comments'
-        ,
-          include: '#characters'
-      ]
+      name: 'keyword.control' # purple
+      match: /mandatory|functional|not\s|on\s|with\s|for\s/
     ,
-      name: 'keyword.control'
-      match: /als|met properties/
+      name: 'comment.propertyrange.arc' # gray
+      match: /String|Number|Boolean|DateTime|Consult|Change|Delete|Create|Bind/
     ,
-      name: 'support.other'
-      match: /import/
+      name: 'entity.name.type.contextkinds.arc' # yellow
+      match: /domain|case|party|activity|state/
     ,
-      name: 'section'
-      match: /(Partijen|Zaken|Activiteiten|Toestanden|Acties|Rollen|Properties|Acties|Views|intern|extern)/
-      captures:
-        1: name: 'keyword.other'
+      name: 'string.rolekinds.arc' # green
+      match: /external|thing|context|user|bot/
     ,
-      name: 'meta.entity.contexdeclaration'
-      begin: /(?=.*heeft)/
-      end: /$/
-      patterns: [
-          include: '#context'
-        ,
-          name: 'support.other'
-          match: /heeft/
-      ]
+      name: 'entity.name.function.rolepart.arc'
+      match: /property|view|perspective/
     ,
-      name: 'meta.entity.roldeclaration'
-      begin: /^\s*(?=.*gevuld door)/
-      end: /\n{1,1}?/
-      patterns: [
-          name: 'support.other'
-          match: /gevuld door|heeft/
-        ,
-          include: '#verplicht'
-        ,
-          include: '#functioneel'
-        ,
-          include: '#rol'
-        ,
-          include: '#context'
-        ,
-          include: '#comments'
-      ]
+      name: 'variable.aspect.arc' # red.
+      match: /aspect|use{keywordlimit}|filledBy/
     ,
-      name: 'meta.entity.propertydeclaration'
-      begin: /^\s*(?=.*{ranges})/
-      end: /\n{1,1}?/
-      patterns: [
-          include: '#verplicht'
-        ,
-          include: '#functioneel'
-        ,
-          include: '#range'
-        ,
-          include: '#property'
-        ,
-          include: '#context'
-        ,
-          include: '#comments'
-      ]
-    ,
-      name: 'meta.entity.import'
-      begin: /^\s*(import)/
-      end: /\n{1,1}?/
-      beginCaptures:
-        1: name: 'support.other'
-      patterns: [
-          include: '#domein_name'
-        ,
-          name: 'support.other.alias'
-          match: /(als)\s*({Prefix})/
-          captures:
-            1: name: 'support.other'
-            2: name: 'entity.name.tag.prefix'
-      ]
+      name: 'variable.interpolation.actionparts.arc'
+      match: /indirectObject|subjectView/
     ,
       include: '#comments'
-    ,
-      name: 'string.quoted.double'
-      begin: /"/
-      end: /"/
-      beginCaptures:
-        0: name: 'punctuation.definition.string.begin'
-      endCaptures:
-        0: name: 'punctuation.definition.string.end'
-      patterns: [
-          include: '#characters'
-        ,
-          begin: /\\\s/
-          end: /\\/
-          beginCaptures:
-            0: name: 'markup.other.escape.newline.begin'
-          endCaptures:
-            0: name: 'markup.other.escape.newline.end'
-          patterns: [
-              match: /\S+/
-              name: 'invalid.illegal.character-not-allowed-here'
-          ]
-        ]
   ]
   repository:
-    range:
-      name: 'constant.language.propertytypes'
-      match: /{ranges}/
-    ###
-      CONTEXT NAMES
-    ###
-    verplicht:
-      name: 'storage.modifier.verplicht'
-      match: /Verplicht|Niet\s*Verplicht/
-    functioneel:
-      name: 'storage.modifier.functioneel'
-      match: /Functioneel|Niet\s*Functioneel/
-    context:
-      patterns: [
-          include: '#localcontextName'
-        ,
-          include: '#qualifiedContextName'
-        ,
-          include: '#prefixedContextName'
-        ]
-    localcontextName:
-      name: 'localcontextName'
-      match: /(\$)({CapitalizedString})/
-      captures:
-        1: name: 'entity.name.tag.separator'
-        2: name: 'entity.name.type.localcontextname'
-    domein_name:
-      name: 'domein_name'
-      match: /(model\:)({CapitalizedString})/
-      captures:
-          1: name: 'entity.name.tag.model'
-          2: name: 'entity.name.type.localcontextname'
-    qualifiedContextName:
-      patterns:[
-          include: '#domein_name'
-        ,
-          include: '#localcontextName'
-      ]
-    prefixedContextName:
-      patterns:[
-          name: 'entity.name.tag.prefix'
-          match: /{Prefix}/
-        ,
-          name: 'entity.name.type.localcontextname'
-          match: /{CapitalizedString}/
-        ,
-          include: '#localcontextName'
-      ]
-    rol:
-      patterns: [
-          include: '#localrolname'
-        ,
-          include: '#qualifiedContextName'
-        ,
-          include: '#prefixedContextName'
-        ]
-    property:
-      patterns: [
-          include: '#rolsegment'
-        ,
-          include: '#localpropertyname'
-        ,
-          include: '#qualifiedContextName'
-        ,
-          include: '#prefixedContextName'
-        ]
-    localrolname:
-      match: /(\$)({UncapitalizedString})\b/
-      captures:
-        1: name: 'entity.name.tag.separator'
-        2: name: 'entity.other.tag.localrolname'
-    rolsegment:
-      match: /(\$)({UncapitalizedString})(?=\$)/
-      captures:
-        1: name: 'entity.name.tag.separator'
-        2: name: 'entity.other.tag.rolsegment'
-    localpropertyname:
-      match: /(\$)({UncapitalizedString})(?!\$)/
-      captures:
-        1: name: 'entity.name.tag.separator'
-        2: name: 'entity.other.attribute-name.localpropertyname'
     ###
       COMMENTS
     ###
