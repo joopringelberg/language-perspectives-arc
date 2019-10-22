@@ -45,7 +45,7 @@ arcGrammar =
 
   patterns: [
       name: 'keyword.control' # purple
-      match: /mandatory|functional|not\s|on\s|with\s|for\s/
+      match: /mandatory|functional|not\s|on\s|with\s|for\s|\sif\s|\sthen\s/
     ,
       name: 'comment.propertyrange.arc' # gray
       match: /String|Number|Boolean|DateTime|Consult|Change|Delete|Create|Bind/

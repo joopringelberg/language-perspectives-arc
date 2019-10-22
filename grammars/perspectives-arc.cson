@@ -11,7 +11,7 @@
 'patterns': [
   {
     'name': 'keyword.control.perspectives-arc'
-    'match': 'mandatory|functional|not\\s|on\\s|with\\s|for\\s'
+    'match': 'mandatory|functional|not\\s|on\\s|with\\s|for\\s|\\sif\\s|\\sthen\\s'
   }
   {
     'name': 'comment.propertyrange.arc.perspectives-arc'
