@@ -1,0 +1,275 @@
+{
+  "scopeName": "source.arc",
+  "fileTypes": ["arc"],
+  "name": "ARC",
+  "repository": {
+    "strings": {
+      "name": "string.quoted.double.arc",
+      "begin": "\\\"",
+      "end": "\\\"",
+      "patterns": {
+        "name": "constant.character.escape.arc",
+        "match": "\\."
+      }
+    },
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-dash",
+          "begin": "(^[ \\t]+)?(?=--+\\s+\\|)",
+          "end": "(?!\\G)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.whitespace.comment.leading"
+            }
+          },
+          "patterns": {
+            "name": "comment.line.double-dash.documentation",
+            "begin": "(--+)\\s+(\\|)",
+            "end": "\\n",
+            "beginCaptures": {
+              "1": {
+                "name": "punctuation.definition.comment"
+              },
+              "2": {
+                "name": "punctuation.definition.comment.documentation"
+              }
+            }
+          }
+        },
+        {
+          "begin": "(^[ \\t]+)?(?=--+)",
+          "end": "(?!\\G)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.whitespace.comment.leading"
+            }
+          },
+          "patterns": {
+            "name": "comment.line.double-dash",
+            "begin": "--",
+            "end": "\\n",
+            "beginCaptures": {
+              "0": {
+                "name": "punctuation.definition.comment"
+              }
+            }
+          }
+        },
+        {
+          "include": "#block_comment"
+        }
+      ]
+    },
+    "block_comment": {
+      "patterns": [
+        {
+          "name": "comment.block.documentation",
+          "begin": "\\{-\\s*\\|",
+          "end": "-\\}",
+          "applyEndPatternLast": 1,
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.documentation"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.documentation"
+            }
+          },
+          "patterns": {
+            "include": "#block_comment"
+          }
+        },
+        {
+          "name": "comment.block",
+          "begin": "\\{-",
+          "end": "-\\}",
+          "applyEndPatternLast": 1,
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment"
+            }
+          },
+          "patterns": {
+            "include": "#block_comment"
+          }
+        }
+      ]
+    }
+  },
+  "patterns": [
+    {
+      "include": "strings"
+    },
+    {
+      "include": "comments"
+    },
+    {
+      "include": "block_comment"
+    },
+    {
+      "name": "entity.name.type.contextkind.arc",
+      "match": "^\\s*\\b(domain|case|party|activity)\\b"
+    },
+    {
+      "name": "entity.name.type.rolekind.arc",
+      "match": "^\\s*\\b(external|thing|context)\\b"
+    },
+    {
+      "name": "entity.name.type.rolekind.arc",
+      "match": "\\bextern\\b"
+    },
+    {
+      "match": "\\b(user\\s+)(\\w+)\\b",
+      "captures": {
+        "1": {
+          "name": "entity.name.type.rolekind.arc"
+        },
+        "2": {
+          "name": "entity.name.type.userrole.arc"
+        }
+      }
+    },
+    {
+      "name": "entity.name.type.property.arc",
+      "match": "\\bproperty\\b"
+    },
+    {
+      "name": "entity.other.perspective.arc",
+      "match": "\\bperspective(\\s+(on|of))?\\b"
+    },
+    {
+      "name": "entity.other.perspective.arc",
+      "match": "\\b(view(?=\\s+[\\w|:|\\$]+\\s+verbs)|verbs|props|only|except|defaults|all\\s+roleverbs|action)\\b"
+    },
+    {
+      "name": "keyword.control.state.arc",
+      "match": "\\bstate\\b"
+    },
+    {
+      "name": "keyword.control.stateTransition.arc",
+      "match": "\\bon\\s+(entry|exit)\\b"
+    },
+    {
+      "match": "\\b(notify)(\\s+\\w+)?\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.control.notification.arc"
+        },
+        "2": {
+          "name": "entity.name.type.userrole.arc"
+        }
+      }
+    },
+    {
+      "match": "\\b(do)(\\s+for\\s+)?(\\w+)?\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.control.automaticAction.arc"
+        },
+        "2": {
+          "name": "keyword.control.automaticAction.arc"
+        },
+        "3": {
+          "name": "entity.name.type.userrole.arc"
+        }
+      }
+    },
+    {
+      "name": "constant.language.boolean.arc",
+      "match": "true|false"
+    },
+    {
+      "name": "constant.other.date.arc",
+      "match": "\\'[\\d|\\-]+\\'"
+    },
+    {
+      "name": "constant.numeric.arc",
+      "match": "\\b\\d+\\b"
+    },
+    {
+      "name": "string.regexp.arc",
+      "match": "\\\\.*\\\\"
+    },
+    {
+      "name": "keyword.operator.arc",
+      "match": "\\b(either|both|binds|matches|and|or|not|exists|available|boundBy|binder|context)\\b"
+    },
+    {
+      "match": "\\b(filter)(.*)(with)\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.arc"
+        },
+        "3": {
+          "name": "keyword.operator.arc"
+        }
+      }
+    },
+    {
+      "name": "keyword.operator.arc",
+      "match": "\\>\\>\\=|\\>\\>|\\*|\\/|\\+|\\-|\\=\\=|\\>\\=|\\<|>\\=|>"
+    },
+    {
+      "name": "variable.language.arc",
+      "match": "\\b(currentcontext|nofifieduser|origin|currentactor)\\b"
+    },
+    {
+      "name": "entity.other.propertyfacet.arc",
+      "match": "\\b(mandatory|relational|minLength|maxLength|enumeration|pattern|maxInclusive|minInclusive)\\b"
+    },
+    {
+      "name": "entity.other.propertyrange.arc",
+      "match": "\\b(String|Number|Boolean|DateTime)\\b"
+    },
+    {
+      "name": "entity.other.roleverb.arc",
+      "match": "\\b(Remove|Delete|Create|CreateAndFill|Fill|Unbind|RemoveFiller|Move)\\b"
+    },
+    {
+      "name": "entity.other.propertyverb.arc",
+      "match": "\\b(RemovePropertyValue|DeleteProperty|AddPropertyValue|SetPropertyValue|Consult)\\b"
+    },
+    {
+      "match": "\\b(remove\\s+)(role|context)\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.control.other.assignment.arc"
+        },
+        "2": {
+          "name": "keyword.control.other.assignment.arc"
+        }
+      }
+    },
+    {
+      "match": "\\b(create\\s+role\\s+)(\\w+)(\\s+in\\b)?",
+      "captures": {
+        "1": {
+          "name": "keyword.control.other.assignment.arc"
+        },
+        "2": {
+          "name": "entity.name.type.rolekind.arc"
+        },
+        "3": {
+          "name": "keyword.control.other.assignment.arc"
+        }
+      }
+    },
+    {
+      "match": "\\b(delete\\s+role\\s+)(\\w+)(\\s+from)\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.control.other.assignment.arc"
+        },
+        "2": {
+          "name": "entity.name.type.rolekind.arc"
+        },
+        "3": {
+          "name": "keyword.control.other.assignment.arc"
+        }
+      }
+    }
+  ]
+}

@@ -60,7 +60,7 @@ arcGrammar =
       match: /property|view|perspective/
     ,
       name: 'variable.aspect.arc' # red.
-      match: /aspect|use{keywordlimit}|filledBy/
+      match: /aspect|use{keywordlimit}|filledBy|indexed/
     ,
       name: 'variable.interpolation.actionparts.arc'
       match: /indirectObject|subjectView/
