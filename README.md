@@ -10,15 +10,23 @@ The code in this package follows the language extension as developed for vscode.
 ## Getting and installing it
 Use the Atom Package Manager to download this package from Github to your installation. `apm` is bundled and installed automatically with Atom. You can run the Atom > Install Shell Commands menu option to install it again if you aren't able to run it from a terminal (macOS only).
 
-To install:
+To install the latest version, run on the command line (location doesn't matter):
 
 ```
-apm install https://github.com/joopringelberg/language-perspectives-arc.git@vX.Y.Z
+apm install https://github.com/joopringelberg/language-perspectives-arc.git
 ```
 
-where vX.Y.Z is the tagged version you want to install.
+Sadly, `apm` does not support installing a particular version. Also, it actually clones the package include with the git revision history, which you don't need and just uses disk space.
 
-Find the [latest release](https://github.com/joopringelberg/language-perspectives-arc/releases) (on Github: Code tab, section releases on the right, click `latest` to find the latest tag). 
+As an alternative, download the package directly into the packages directory of Atom. Find the location of community packages by evaluating on the command line;
+
+```
+apm list
+```
+and copy the location behind the branch Community Packages (on Mac Osx it would be `~/.atom/packages`).
+
+Then download a particular tagged version from Github (open the repo, click on Releases on the left, move to the desired tag, open it and copy the `language-perspectives-arc-X.Y.Z.zip` file). Move the file into the location you've found above and unzip it (remember to remove an older version first!).
+
 
 ## Uninstalling it
 Uninstalling a package in Atom is easy. Open Atom settings, move to the packages tab, select the package and click `Uninstall`.
