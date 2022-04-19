@@ -3,7 +3,7 @@
 This is the README for the language extension "perspectives-arc" in atom. To benefit from syntax coloring in vscode while editing a perspectives model (written in the ARC language), you need to add two extensions to your atom environment:
 
 * a language extension for the Perspectives ARC language (provided in this repo);
-* a theme that complements the language extension (see the repo [theme-perspectives-arc](https://github.com/joopringelberg/theme-perspectives-arc.git); the theme extension may be downloaded there).
+* a theme that complements the language extension. Base16 compatible themes may be used.
 
 The code in this package follows the language extension as developed for vscode. Please refer to that repo for more information on implementation choices.
 
@@ -42,6 +42,17 @@ The first version used for testing installation.
 
 ### 0.0.2
 Release (chosen to be on par with the vscode version of the tokenizer).
+
+### 0.0.3
+* adapted the fileTypes key in the yaml source for compatibility with Atom (atom needs an array of names and cannot handle the leading dot).
+
+### 0.0.4
+The tokenization is now aimed towards support of the base16 color schemes, to provide a broad range of themes.
+
+### 1.0.0
+This version tokenizes everything we think is useful (including comments, now).
+
+Initial release of perspectives-arc.
 
 
 ## Requirements
