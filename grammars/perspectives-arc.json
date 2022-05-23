@@ -87,10 +87,6 @@
       "match": "^\\s*\\b(external|thing|context)\\b"
     },
     {
-      "name": "entity.other.inherited-class.rolekind.extern.arc",
-      "match": "\\bextern\\b"
-    },
-    {
       "name": "entity.other.inherited-class.rolekind.filledBy.arc",
       "match": "\\bfilledBy\\b"
     },
@@ -194,6 +190,10 @@
       }
     },
     {
+      "name": "keyword.timing.arc",
+      "match": "\\b(after|until|every|maximally|times)\\b"
+    },
+    {
       "name": "constant.boolean.arc",
       "match": "true|false"
     },
@@ -210,8 +210,12 @@
       "match": "\\\\.*\\\\"
     },
     {
+      "name": "constant.time.arc",
+      "match": "\\b(Milliseconds|Seconds|Minutes|Days|Hours)\\b"
+    },
+    {
       "name": "support.function.operator.arc",
-      "match": "\\b(either|both|binds|matches|and|or|not|exists|available|boundBy|binder|context)\\b"
+      "match": "\\b(either|both|binds|matches|and|or|not|exists|available|boundBy|binder|context|extern)\\b"
     },
     {
       "match": "\\b(filter)(.*)(with)\\b",
@@ -226,7 +230,7 @@
     },
     {
       "name": "support.function.operator.arc",
-      "match": "\\b(\\>\\>\\=|\\>\\>|\\*|\\/|\\+|\\-|\\=\\=|\\>\\=|\\<|>\\=|>)\\b"
+      "match": "(\\>\\>\\=|\\>\\>|\\*|\\/|\\+|\\-|\\=\\=|\\>\\=|\\<|>\\=|>)"
     },
     {
       "name": "comment.language.arc",

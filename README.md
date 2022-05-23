@@ -54,6 +54,11 @@ This version tokenizes everything we think is useful (including comments, now).
 
 Initial release of perspectives-arc.
 
+### 1.1.0
+Extension for timing facets of automatic actions and notifications:
+
+* The keywords after, until, every, maximally and times get the same color as the other keywords in automatic actions.
+* The time constants Milliseconds, Seconds, Minutes, Hours and Days get the same color as simple values.
 
 ## Requirements
 
